@@ -23,6 +23,7 @@ evil-mail/
 │   ├── Dlls.res                  # Compiled resource file containing embedded OpenSSL DLLs
 │   ├── libeay32.dll              # OpenSSL cryptographic library (source for embedding)
 │   └── ssleay32.dll              # OpenSSL SSL/TLS library (source for embedding)
+├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE                       # GNU General Public License v3.0
 └── README.md
