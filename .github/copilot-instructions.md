@@ -24,6 +24,7 @@ evil-mail/
 │   ├── libeay32.dll              # OpenSSL cryptographic library (source for embedding)
 │   └── ssleay32.dll              # OpenSSL SSL/TLS library (source for embedding)
 ├── CHANGELOG.md
+├── CLAUDE.md                     # Guidance for Claude Code sessions (companion to this file)
 ├── CONTRIBUTING.md
 ├── LICENSE                       # GNU General Public License v3.0
 └── README.md
