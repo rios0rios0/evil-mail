@@ -79,7 +79,7 @@ There is no automated build system. Compilation requires a Windows machine with 
 
 ## Tests and Linting
 
-This project has no automated tests or linters. There is no CI/CD pipeline or GitHub Actions configuration. The project is a preserved historical archive and no testing infrastructure exists.
+This project has no automated tests or linters, and no build or deployment pipeline. The only workflows are `.github/workflows/claude-review.yaml` and `.github/workflows/claude-mention.yaml`, which call the shared Claude reusable workflows in `rios0rios0/pipelines` and need the `CLAUDE_CODE_OAUTH_TOKEN` secret. The project is a preserved historical archive and no testing infrastructure exists.
 
 ## Development Workflow
 
