@@ -8,8 +8,16 @@ Evil Mail is a historical bulk email sending utility built with **Object Pascal 
 
 ```
 evil-mail/
+├── .changes/
+│   └── unreleased/               # chlog fragments awaiting the next release
 ├── .github/
-│   └── copilot-instructions.md  # This file
+│   ├── copilot-instructions.md   # This file
+│   ├── skills/
+│   │   └── code-review/
+│   │       └── SKILL.md          # Copilot code-review skill tailored to this repo
+│   └── workflows/
+│       ├── claude-review.yaml    # Claude PR review (calls rios0rios0/pipelines)
+│       └── claude-mention.yaml   # @claude responder (calls rios0rios0/pipelines)
 ├── EM.dpr                        # Delphi project file – application entry point, creates Form1 and Form2
 ├── EM.res                        # Compiled application resources (icon)
 ├── UEM.pas                       # Main form unit – SMTP config, email composition, sending logic, recipient list
