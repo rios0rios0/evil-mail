@@ -8,7 +8,7 @@ Evil Mail is a bulk email sender written in Object Pascal (Delphi 7), discontinu
 
 ## Build / test
 
-- No automated build, tests, lint, or CI exist in the repo. Don't add commands that can't be run here.
+- No build, test, or lint tooling runs here — there is nothing to execute locally. The only CI is two GitHub Actions callers (`.github/workflows/claude-review.yaml`, `claude-mention.yaml`) that delegate to `rios0rios0/pipelines` reusable workflows and touch no Delphi code. Don't add commands that can't be run here.
 - Compilation requires Windows + Borland Delphi 7 (or compatible RAD Studio) with Indy 9 installed. Open `EM.dpr`, compile with `Ctrl+F9` or build-and-run with `F9`.
 - `Clear.bat` deletes Delphi build artifacts (`*.dcu`, `*.dsk`, `*.cfg`, etc.) from the working directory.
 

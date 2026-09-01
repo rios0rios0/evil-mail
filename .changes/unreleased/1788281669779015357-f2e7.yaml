@@ -1,0 +1,3 @@
+kind: 'Changed'
+body: 'refreshed the `.github/copilot-instructions.md` repository structure tree to list the `.changes/`, `.github/skills/`, and `.github/workflows/` directories'
+time: '2026-09-01T16:54:29.778954574Z'
