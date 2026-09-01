@@ -22,6 +22,13 @@ Exceptions are acceptable depending on the circumstances (critical bug fixes tha
 
 ## [Unreleased]
 
+## [2.3.1] - 2026-09-01
+
+### Changed
+
+- refreshed `CLAUDE.md` to describe the repository's Claude review/mention CI workflows instead of claiming no CI exists
+- refreshed the `.github/copilot-instructions.md` repository structure tree to list the `.changes/`, `.github/skills/`, and `.github/workflows/` directories
+
 ## [2.3.0] - 2026-08-28
 
 ### Added
