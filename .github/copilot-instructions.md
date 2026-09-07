@@ -16,6 +16,7 @@ evil-mail/
 │   │   └── code-review/
 │   │       └── SKILL.md          # Copilot code-review skill tailored to this repo
 │   └── workflows/
+│       ├── checks.yaml           # PR gate: rebase + changelog rule (calls rios0rios0/pipelines)
 │       ├── claude-review.yaml    # Claude PR review (calls rios0rios0/pipelines)
 │       └── claude-mention.yaml   # @claude responder (calls rios0rios0/pipelines)
 ├── EM.dpr                        # Delphi project file – application entry point, creates Form1 and Form2
@@ -87,7 +88,7 @@ There is no automated build system. Compilation requires a Windows machine with 
 
 ## Tests and Linting
 
-This project has no automated tests or linters, and no build or deployment pipeline. The only workflows are `.github/workflows/claude-review.yaml` and `.github/workflows/claude-mention.yaml`, which call the shared Claude reusable workflows in `rios0rios0/pipelines` and need the `CLAUDE_CODE_OAUTH_TOKEN` secret. The project is a preserved historical archive and no testing infrastructure exists.
+This project has no automated tests or linters, and no build or deployment pipeline. Three workflows call reusable workflows in `rios0rios0/pipelines`: `claude-review.yaml` and `claude-mention.yaml` (the Claude review and `@claude` responders, needing the `CLAUDE_CODE_OAUTH_TOKEN` secret) and `checks.yaml`, which runs the shared `quality:basic-checks` gate — rebase status and the changelog-fragment rule — on every pull request to `main`. None of them compile Delphi code. The project is a preserved historical archive and no testing infrastructure exists.
 
 ## Development Workflow
 
