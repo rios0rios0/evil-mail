@@ -1,3 +1,3 @@
 kind: 'Changed'
-body: 'reworded the secret-hygiene bullet in `.github/skills/code-review/SKILL.md` to name vendor prefixes without quoting a gitleaks-matchable shape'
+body: 'reworded the secret-hygiene bullet in the `code-review` skill to name the vendor behind each credential prefix and to drop the hyphen from the Slack example, the one shape the shared Gitleaks history scan matches on its own'
 time: '2026-09-07T07:52:03.753882802Z'
