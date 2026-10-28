@@ -32,8 +32,9 @@ evil-mail/
 │   ├── Dlls.res                  # Compiled resource file containing embedded OpenSSL DLLs
 │   ├── libeay32.dll              # OpenSSL cryptographic library (source for embedding)
 │   └── ssleay32.dll              # OpenSSL SSL/TLS library (source for embedding)
+├── AGENTS.md                     # Instructions shared by every coding agent (companion to this file)
 ├── CHANGELOG.md
-├── CLAUDE.md                     # Guidance for Claude Code sessions (companion to this file)
+├── CLAUDE.md                     # Claude Code entry point; contains only `@AGENTS.md`
 ├── CONTRIBUTING.md
 ├── LICENSE                       # GNU General Public License v3.0
 └── README.md
@@ -61,7 +62,7 @@ The application has two forms:
    - **Message** (`grpmsg`): sender email (`edtremetente`), sender display name (`edtnomeremet`), subject (`edtassunto`, defaults to `(Sem Assunto)`), HTML body memo (`mmocorpomsg`), and optional attachment (`edtanexo`)
    - **Recipient List** (`grplista`): a `TListBox` (`lstdestinos`) with a right-click popup menu for add/modify/remove/clear/import/export operations
 
-2. **Form2 (`TForm2` in `UEMP.pas`)** – the HTML preview window that saves memo contents to `Preview.HTML` in the working directory and navigates an embedded `TWebBrowser` to display it
+2. **Form2 (`TForm2` in `UEMP.pas`)** – the HTML preview window. `TForm1.btnvisuhtmlClick` saves the memo to `Preview.HTML` in the working directory, and `TForm2.FormShow` navigates an embedded `TWebBrowser` to that file
 
 ### Email Sending Flow (`btnenviarmsgClick`)
 
@@ -104,7 +105,7 @@ Because this project is archived and no longer maintained, there is no active de
   - Form component names use lowercase prefixes (e.g., `edt` for `TEdit`, `btn` for `TButton`, `lbl` for `TLabel`, `mmo` for `TMemo`, `lst` for `TListBox`, `grp` for `TGroupBox`, `pb` for `TProgressBar`, `stat` for `TStatusBar`, `dlg` for dialogs)
   - Event handlers follow Delphi's auto-generated pattern: `<ComponentName><EventName>` (e.g., `btnenviarmsgClick`)
 - **UI strings:** The application UI is in Brazilian Portuguese (Português do Brasil)
-- **Error handling:** Uses `try/except` blocks with `MessageBox` dialogs for user-facing errors; no structured logging
+- **Error handling:** The send loop catches each recipient's failure and writes it to the status bar (`stat1`) instead of aborting; `MessageBox` dialogs are used for prompts, validation errors, and confirmations; no structured logging
 
 ## Common Tasks
 
@@ -113,10 +114,6 @@ Because this project is archived and no longer maintained, there is no active de
 | Build the project               | Open `EM.dpr` in Delphi 7, press **Ctrl+F9**                                |
 | Run the application             | Press **F9** in Delphi 7, or run the compiled `EM.exe` directly              |
 | Clean build artefacts           | Run `Clear.bat` in the project root                                          |
-| Add a recipient                 | Right-click the recipient list → **Adicionar E-Mail**                        |
-| Import a recipient list         | Right-click the list → **Abrir Lista** (plain text file, one email per line) |
-| Preview HTML message body       | Click **Visualizar HTML** button in the main form                            |
-| Attach a file                   | Click the attachment button; note that HTML formatting is disabled with attachments |
 
 ## Notes for AI Assistants
 
@@ -125,6 +122,9 @@ Because this project is archived and no longer maintained, there is no active de
 - The source code contains **Brazilian Portuguese** UI strings; do not translate them
 - The `Resources/Dlls.res` file is a binary compiled resource – it cannot be edited as plain text
 - OpenSSL DLLs (`libeay32.dll`, `ssleay32.dll`) in the `Resources/` folder are **legacy versions** bundled for historical compatibility only
+- `.pas` sources are ANSI (Windows-1252) encoded; `�` in Portuguese literals is a UTF-8 display artifact, not a bug. Do not re-encode them to UTF-8
+- The HTML preview couples the two forms through the `Preview.HTML` file path; changing it in one unit breaks the other
+- The `ContentType := 'text/plain'` then `'text/HTML'` sequence around `Body.Text` in the send loop is intentional Indy 9 behavior; do not simplify it
 
 <!-- chlog:start -->
 ## Changelog (chlog) — MANDATORY

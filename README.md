@@ -62,7 +62,7 @@ The application consists of two forms:
    - **Message Group** ("Mensagem"): sender email, sender display name, subject line (defaults to "Sem Assunto"), and a memo field for the HTML message body
    - **Recipient List Group** ("Lista"): a `TListBox` with right-click context menu for add/modify/remove/clear/import/export operations
 
-2. **Form2 (`TForm2` in `UEMP.pas`)** -- the HTML preview window that saves the memo contents to a temporary `Preview.HTML` file and navigates the embedded `TWebBrowser` to display it
+2. **Form2 (`TForm2` in `UEMP.pas`)** -- the HTML preview window; the main form saves the memo contents to `Preview.HTML` in the working directory, and Form2 navigates the embedded `TWebBrowser` to that file
 
 ### Email Sending Flow
 
@@ -85,8 +85,8 @@ The application consists of two forms:
 3. Set the sender email address and display name
 4. Compose the message body (supports HTML markup)
 5. Add recipients manually or import a text file (one email per line)
-6. Click **Enviar** to send to all recipients
-7. Use **Visualizar HTML** to preview the message rendering
+6. Click **Enviar Mensagem** to send to all recipients
+7. Use **Visualização HTML** to preview the message rendering
 
 ## Contributing
 

@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents (Claude Code, Codex, Cursor, GitHub Copilot) when working with code in this repository.
 
 ## What this is
 
@@ -8,7 +8,7 @@ Evil Mail is a bulk email sender written in Object Pascal (Delphi 7), discontinu
 
 ## Build / test
 
-- No build, test, or lint tooling runs here — there is nothing to execute locally. CI is three GitHub Actions callers that delegate to `rios0rios0/pipelines` reusable workflows and touch no Delphi code: `.github/workflows/claude-review.yaml` and `claude-mention.yaml`, plus `checks.yaml`, which runs the shared `quality:basic-checks` gate (rebase status and the changelog-fragment rule) on every pull request. Don't add commands that can't be run here.
+- No build, test, or lint tooling runs here — there is nothing to execute locally. CI is three GitHub Actions callers that delegate to `rios0rios0/pipelines` reusable workflows and touch no Delphi code: `.github/workflows/claude-review.yaml` and `claude-mention.yaml`, plus `checks.yaml`, which runs the shared `quality:basic-checks` gate (rebase status and the changelog-fragment rule) on pull requests to `main`. Don't add commands that can't be run here.
 - Compilation requires Windows + Borland Delphi 7 (or compatible RAD Studio) with Indy 9 installed. Open `EM.dpr`, compile with `Ctrl+F9` or build-and-run with `F9`.
 - `Clear.bat` deletes Delphi build artifacts (`*.dcu`, `*.dsk`, `*.cfg`, etc.) from the working directory.
 
@@ -23,8 +23,7 @@ Evil Mail is a bulk email sender written in Object Pascal (Delphi 7), discontinu
 ## Conventions
 
 - UI strings are Brazilian Portuguese. Do not translate them.
-- `.pas` sources are ANSI/Latin-1 encoded; the mojibake in string literals (e.g. `Informa��o`) is the original encoding, not a bug to fix — do not re-encode to UTF-8.
-- Delphi component naming uses lowercase type prefixes: `edt`, `btn`, `lbl`, `mmo`, `lst`, `grp`, `pb`, `stat`, `dlg`. Event handlers follow Delphi's `<Component><Event>` auto-naming.
+- `.pas` sources are ANSI (Windows-1252) encoded. Tools that decode them as UTF-8 show `�` in Portuguese literals such as `Informação`; the bytes are correct. Don't re-encode to UTF-8, and edit these files only with a method that preserves the encoding — UTF-8-only editors refuse or corrupt them.
 - Windows-only Win32: file paths, DLL handling, and `WinInet`/`TWebBrowser` usage are all Windows-specific. `Resources/Dlls.res` is a compiled binary resource and cannot be edited as text.
 
 <!-- chlog:start -->
