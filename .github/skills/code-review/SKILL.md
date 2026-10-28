@@ -20,7 +20,7 @@ The canonical engineering standards live in the
 repo-tailored index into that guide plus the rules that only apply here. Precedence, highest
 first:
 
-1. This repository's `.github/copilot-instructions.md`, `CLAUDE.md`, and `CONTRIBUTING.md` —
+1. This repository's `AGENTS.md`, `.github/copilot-instructions.md`, and `CONTRIBUTING.md` —
    they describe *this* codebase and its load-bearing invariants.
 2. The **rios0rios0/guide** wiki — the shared standard.
 3. General language idiom.
@@ -46,9 +46,8 @@ guide disagree, the guide wins and this file should be corrected in the same pul
    `git symbolic-ref refs/remotes/origin/HEAD` (strip `refs/remotes/origin/`; fall back to `main`),
    then read the diff with `git diff <default>...HEAD` and the file list with
    `git diff <default>...HEAD --name-only`.
-2. **Read whole files, not just hunks.** A hunk cannot show a layering violation, a missing
-   test, or a duplicated helper. Open every changed file in full, plus the files it imports
-   from the layer below.
+2. **Read whole files, not just hunks.** Open every changed file in full, plus the files it
+   couples to: `UEM.pas` and `UEMP.pas` share `Preview.HTML`, and each `.pas` has a `.dfm`.
 3. **Check the change set as a unit** — not only the code. A change that alters behaviour,
    configuration, or architecture is incomplete without its changelog entry and its
    documentation update, and that omission is a finding in its own right.
@@ -67,7 +66,7 @@ them before the generic ones.
 - **The embedded OpenSSL DLLs are ancient binaries** shipped as resources (`Resources/Dlls.res`). They cannot be reviewed and they carry known vulnerabilities; a change that replaces or adds one needs its provenance and version stated. Extracting a DLL to disk at runtime is itself a security-relevant behaviour — check where it is written and whether it can be pre-empted by a planted file.
 - **The preview form renders attacker-influenced HTML.** `UEMP.pas` loads `Preview.HTML` into a `TWebBrowser`; that control executes scripts and can be navigated. Any change to what is loaded, or to the browser's security settings, is security-relevant.
 - **Bulk sending needs to stay clearly educational.** This repository documents a historical tool; a change that adds evasion, spoofed headers, harvesting, or throughput tuning for unsolicited mail is out of scope — say so and stop there.
-- **Attachment and recipient-list handling is buffer-based.** A path or list entry read without a length check is an overrun in a program with no runtime protections.
+- **Recipient lists and the attachment path are not validated.** `btnabrirlistaClick` loads any file into the list, `btnaddemailClick` and `btnmodificarClick` accept any string, and the attachment is whatever path the dialog returns. A change that parses or acts on these inputs needs validation.
 - **The form conventions are the standard here**: `T`-prefixed types, component prefixes (`edt`, `grp`, `chk`, `btn`), Delphi's auto-generated `<Component><Event>` handler names, and Portuguese UI strings.
 - **Treat this as an archive.** No modernisation, no reformatting, no new dependencies.
 - **`Clear.bat` defines build output** (`.dcu`, `.dsk`, `.cfg`, …); none of it belongs in a commit.
@@ -108,8 +107,9 @@ hand.
 - Fragment bodies start with a lowercase verb in simple past tense, capitalise proper nouns
   (GitHub, Go, Docker), and wrap code identifiers and versions in backticks.
 - `README.md` is updated whenever usage, setup, configuration, or architecture changes;
-  `.github/copilot-instructions.md` and `CLAUDE.md` whenever the workflow, commands, or
-  structure changes. Documentation and code ship in one commit.
+  `.github/copilot-instructions.md` and `AGENTS.md` whenever the workflow, commands, or
+  structure changes; `CLAUDE.md` stays the single line `@AGENTS.md`. Documentation and code
+  ship in one commit.
 
 ## Git Flow and pull-request hygiene
 
@@ -154,7 +154,7 @@ A review that raises noise gets ignored. Do not report these:
 - Anything that amounts to "this is old code". Modernising idiom, renaming identifiers, reformatting, or introducing a framework into a preserved archive is out of scope and destroys the historical record.
 - Mixed Portuguese and English identifiers and UI strings — that is the original code.
 - The absence of tests, linting, or a CI compile step.
-- The `.dfm` form layouts — they are designer output.
+- The `.dfm` form layouts — they are designer output. Their `Text =` values are the exception: the SMTP host, user, password, and sender fields store default values in `UEM.dfm`, so a real credential or address there is the Critical finding above.
 - Anything the guide does not require and this file does not list, unless it is a genuine correctness or security defect — say so plainly and label it a Suggestion.
 
 ## Review output format
@@ -174,7 +174,7 @@ A review that raises noise gets ignored. Do not report these:
 ### Change-control checklist
 - [ ] Changelog entry present for every behavioural change
 - [ ] `README.md` updated if usage, setup, or architecture changed
-- [ ] `.github/copilot-instructions.md` and `CLAUDE.md` updated if the workflow, commands, or structure changed
+- [ ] `.github/copilot-instructions.md` and `AGENTS.md` updated if the workflow, commands, or structure changed
 - [ ] Commit messages follow `type(SCOPE): message` in simple past tense
 - [ ] Breaking changes flagged in the commit footer, the changelog, and the PR description
 
@@ -186,8 +186,8 @@ A review that raises noise gets ignored. Do not report these:
 
 | Severity       | Use for                                                                                                                            |
 |----------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **Critical**   | Broken dependency direction, a leaked secret, an injection or authentication flaw, a missing changelog entry, a banned mock library, a load-bearing invariant broken, a test deleted rather than fixed. |
-| **Warning**    | Naming that departs from the guide, a missing test for a new branch of logic, an unexplained magic value, a stale README or instructions file, a `switch` that should be a map. |
+| **Critical**   | A leaked secret or real recipient list, an injection or authentication flaw, a missing changelog entry, a load-bearing invariant broken. |
+| **Warning**    | Naming that departs from the form conventions, an unexplained magic value, a stale README or instructions file. |
 | **Suggestion** | Readability, consistency with neighbouring modules, and performance ideas that no rule mandates.                                     |
 
 Rank findings most severe first, and state plainly when nothing blocks the merge — an empty
