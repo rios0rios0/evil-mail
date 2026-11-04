@@ -22,6 +22,13 @@ Exceptions are acceptable depending on the circumstances (critical bug fixes tha
 
 ## [Unreleased]
 
+## [2.4.2] - 2026-11-04
+
+### Changed
+
+- moved the agent instructions from `CLAUDE.md` to `AGENTS.md`, keeping a `CLAUDE.md` that imports it
+- refreshed `AGENTS.md`, `.github/copilot-instructions.md`, the `code-review` skill, and `README.md` to point at `AGENTS.md` instead of `CLAUDE.md`, attribute the `Preview.HTML` write to `TForm1.btnvisuhtmlClick`, describe the send loop's status-bar error handling, correct the `.pas` encoding note and the UI captions, and drop review rules that assumed buffers, layers, and tests this repository does not have
+
 ## [2.4.1] - 2026-09-08
 
 ### Changed
